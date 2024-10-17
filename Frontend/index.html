@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Tracker</title>
+    <link href="asset/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="asset/css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button id="addProjectBtn" class="btn btn-primary mb-2" data-bs-toggle="modal"
+                    data-bs-target="#projectModal">Add Project</button>
+                <button id="addTaskBtn" class="btn btn-secondary mb-2" data-bs-toggle="modal"
+                    data-bs-target="#addTaskModal">Add Task</button>
+
+                <div id="projectList" class="project-list border">
+
+                </div>
+            </div>
+
+            <div class="modal fade" id="projectModal" tabindex="-1" aria-labelledby="projectModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="projectModalLabel">Add/Edit Project</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="projectForm">
+                                <div class="mb-3">
+                                    <label for="projectName" class="form-label">Project Name</label>
+                                    <input type="text" class="form-control" id="projectName" required>
+                                </div>
+                                <input type="hidden" id="projectId">
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="saveProjectBtn">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="projectDetailModal" tabindex="-1" aria-labelledby="projectDetailModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="projectDetailModalLabel">Project Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="projectId">
+                            <div class="mb-3">
+                                <label for="detailProjectName" class="form-label">Project Name</label>
+                                <input type="text" class="form-control" id="detailProjectName">
+                            </div>
+                            <div class="mb-3">
+                                <label for="projectStatus" class="form-label">Status</label>
+                                <input type="text" class="form-control" id="projectStatus" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="projectCompletionProgress" class="form-label">Completion Progress
+                                    (%)</label>
+                                <input type="text" class="form-control" id="projectCompletionProgress" readonly>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" id="deleteProjectBtn">Delete</button>
+                            <button type="button" class="btn btn-primary" id="updateProjectBtn">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="taskModal" tabindex="-1" aria-labelledby="taskModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="taskModalLabel">Add Task</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="taskForm">
+                                <div class="mb-3">
+                                    <label for="taskName" class="form-label">Task Name</label>
+                                    <input type="text" class="form-control" id="taskName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="taskStatus" class="form-label">Status</label>
+                                    <select class="form-control" id="taskStatus" required>
+                                        <option value="Draft">Draft</option>
+                                        <option value="In Progress">In Progress</option>
+                                        <option value="Done">Done</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="taskWeight" class="form-label">Weight</label>
+                                    <input type="number" class="form-control" id="taskWeight" required>
+                                </div>
+                                <input type="hidden" id="taskProjectId">
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="saveTaskBtn">Save Task</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="taskDetailModal" tabindex="-1" aria-labelledby="taskDetailModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="taskDetailModalLabel">Task Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" id="taskId">
+                            <div class="mb-3">
+                                <label for="detailTaskName" class="form-label">Task Name</label>
+                                <input type="text" class="form-control" id="detailTaskName">
+                            </div>
+                            <div class="mb-3">
+                                <label for="detailTaskStatus" class="form-label">Status</label>
+                                <select class="form-control" id="detailTaskStatus">
+                                    <option value="Draft">Draft</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Done">Done</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="detailTaskWeight" class="form-label">Weight</label>
+                                <input type="number" class="form-control" id="detailTaskWeight">
+                            </div>
+                            <div class="mb-3">
+                                <label for="projectRelations" class="form-label">Project Name</label>
+                                <input type="text" class="form-control" id="projectRelations" readonly>
+                            </div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-between">
+                            <button type="button" class="btn btn-danger" id="deleteTaskBtn">Delete</button>
+                            <button type="button" class="btn btn-primary" id="saveTaskDetailBtn">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addTaskModalLabel">Add Task</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addTaskForm">
+                                <div class="mb-3">
+                                    <label for="addTaskName" class="form-label">Task Name</label>
+                                    <input type="text" class="form-control" id="addTaskName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="addTaskStatus" class="form-label">Status</label>
+                                    <select class="form-control" id="addTaskStatus" required>
+                                        <option value="Draft">Draft</option>
+                                        <option value="In Progress">In Progress</option>
+                                        <option value="Done">Done</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="addTaskWeight" class="form-label">Weight</label>
+                                    <input type="number" class="form-control" id="addTaskWeight" required>
+                                </div>
+                                <select class="form-control" id="addTaskProject" required>
+
+                                </select>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="NewsaveTaskBtn">Save Task</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="asset/js/bootstrap.min.js"></script>
+    <script src="asset/js/script.js"></script>
+</body>
+
+</html>
